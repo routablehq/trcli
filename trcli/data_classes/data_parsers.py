@@ -9,7 +9,7 @@ class MatchersParser:
     PROPERTY = "property"
 
     @staticmethod
-    def parse_name_with_id(case_name: str) -> (int, str):
+    def parse_name_with_id(case_name: str) -> ([int], str):
         """Parses case names expecting an ID following one of the following patterns:
         - "C123 my test case"
         - "my test case C123"
@@ -20,30 +20,42 @@ class MatchersParser:
         - "my test case [C123]"
         - "module 1 [C123] my test case"
 
+        Multiple test case IDs are allowed in any variation with space, comma, or snake delimiters:
+        - "C123 C456 my test case"
+
         :param case_name: Name of the test case
-        :return: Tuple with test case ID and test case name without the ID
+        :return: Tuple with test case IDs (or an empty list) and test case name
         """
-        for char in [" ", "_"]:
-            parts = case_name.split(char)
-            parts_copy = parts.copy()
-            for idx, part in enumerate(parts):
-                if part.lower().startswith("c") and len(part) > 1:
-                    id_part = part[1:]
-                    if id_part.isnumeric():
-                        parts_copy.pop(idx)
-                        return int(id_part), char.join(parts_copy)
-
-        results = re.findall(r"\[(.*?)\]", case_name)
+        case_ids = []
+        name_without_ids = case_name
+        results = re.findall(r"\[(.*?)]", case_name)
         for result in results:
-            if result.lower().startswith("c"):
-                case_id = result[1:]
-                if case_id.isnumeric():
-                    id_tag = f"[{result}]"
-                    tag_idx = case_name.find(id_tag)
-                    case_name = f"{case_name[0:tag_idx].strip()} {case_name[tag_idx + len(id_tag):].strip()}".strip()
-                    return int(case_id), case_name
+            for part in filter(lambda s: s not in ["", " ", ","], re.split(r'(\s|,)', result)):
+                if part.lower().startswith("c"):
+                    case_id = part[1:]
+                    if case_id.isnumeric():
+                        case_ids.append(int(case_id))
+                        part_idx = name_without_ids.find(part)
+                        name_without_ids = (f"{name_without_ids[0:part_idx].strip()}"
+                                            f"{name_without_ids[part_idx + len(part):].strip()}")
+            name_without_ids = re.sub(r"(\s\[[\s,]*])|(\[[\s,]*]\s?)", "", name_without_ids).strip()
 
-        return None, case_name
+        if not case_ids:
+            for char in [" ", "_", ","]:
+                parts = case_name.split(char)
+                parts_copy = parts.copy()
+                for idx, part in enumerate(parts):
+                    if part.lower().startswith("c") and len(part) > 1:
+                        id_part = part.strip(",")[1:]
+                        if id_part.isnumeric():
+                            parts_copy.remove(part)
+                            case_ids.append(int(id_part))
+
+                if case_ids:
+                    name_without_ids = char.join(parts_copy)
+                    break
+
+        return case_ids, name_without_ids
 
 
 class FieldsParser:
