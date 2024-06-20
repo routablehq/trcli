@@ -48,7 +48,7 @@ class RobotParser(FileParser):
             section = TestRailSection(namespace)
             sections_list.append(section)
             for test in tests:
-                case_id = None
+                case_ids = []
                 case_name = test.get("name")
                 attachments = []
                 result_fields = []
@@ -56,13 +56,15 @@ class RobotParser(FileParser):
                 comments = []
                 documentation = test.find("doc")
                 if self.case_matcher == MatchersParser.NAME:
-                    case_id, case_name = MatchersParser.parse_name_with_id(case_name)
+                    case_ids, case_name = MatchersParser.parse_name_with_id(case_name)
                 if documentation is not None:
                     lines = [line.strip() for line in documentation.text.splitlines()]
                     for line in lines:
                         if line.lower().startswith("- testrail_case_id:") \
                                 and self.case_matcher == MatchersParser.PROPERTY:
-                            case_id = int(self._remove_tr_prefix(line, "- testrail_case_id:").lower().replace("c", ""))
+                            case_ids.append(int(self._remove_tr_prefix(
+                                line, "- testrail_case_id:"
+                            ).lower().replace("c", "")))
                         if line.lower().startswith("- testrail_attachment:"):
                             attachments.append(self._remove_tr_prefix(line, "- testrail_attachment:"))
                         if line.lower().startswith("- testrail_result_field"):
@@ -104,25 +106,28 @@ class RobotParser(FileParser):
                 if error:
                     self.env.elog(error)
                     raise Exception(error)
-                result = TestRailResult(
-                    case_id,
-                    elapsed=f"{elapsed_time.total_seconds()}",
-                    status_id=status_id,
-                    comment=error_msg,
-                    attachments=attachments,
-                    result_fields=result_fields_dict,
-                    custom_step_results=step_keywords
-                )
-                for comment in reversed(comments):
-                    result.prepend_comment(comment)
-                tr_test = TestRailCase(
-                    title=TestRailCaseFieldsOptimizer.extract_last_words(case_name, TestRailCaseFieldsOptimizer.MAX_TESTCASE_TITLE_LENGTH),
-                    case_id=case_id,
-                    result=result,
-                    custom_automation_id=f"{namespace}.{case_name}",
-                    case_fields=case_fields_dict
-                )
-                section.testcases.append(tr_test)
+                for case_id in case_ids or [None]:
+                    result = TestRailResult(
+                        case_id,
+                        elapsed=f"{elapsed_time.total_seconds()}",
+                        status_id=status_id,
+                        comment=error_msg,
+                        attachments=attachments,
+                        result_fields=result_fields_dict,
+                        custom_step_results=step_keywords
+                    )
+                    for comment in reversed(comments):
+                        result.prepend_comment(comment)
+                    tr_test = TestRailCase(
+                        title=TestRailCaseFieldsOptimizer.extract_last_words(
+                            case_name, TestRailCaseFieldsOptimizer.MAX_TESTCASE_TITLE_LENGTH
+                        ),
+                        case_id=case_id,
+                        result=result,
+                        custom_automation_id=f"{namespace}.{case_name}",
+                        case_fields=case_fields_dict
+                    )
+                    section.testcases.append(tr_test)
 
         for sub_suite_element in suite_element.findall("suite"):
             self._find_suites(sub_suite_element, sections_list, namespace=namespace)

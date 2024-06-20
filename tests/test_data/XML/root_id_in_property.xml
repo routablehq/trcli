@@ -22,6 +22,12 @@
             </properties>
             <skipped type="pytest.skip" message="Please skip">skipped by user</skipped>
         </testcase>
-        <testcase classname="tests.test_junit_to_dataclass" name="test_testrail 4" time="159"/>
+        <testcase classname="tests.test_junit_to_dataclass" name="test_testrail 4" time="159">
+            <properties>
+                <property name="test_id" value="c103"/>
+                <property name="test_id" value="c104"/>
+            </properties>
+        </testcase>
+        <testcase classname="tests.test_junit_to_dataclass" name="test_testrail 5" time="159"/>
     </testsuite>
 </testsuites>

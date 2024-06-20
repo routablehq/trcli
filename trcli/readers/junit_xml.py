@@ -105,7 +105,7 @@ class JunitParser(FileParser):
                         processed_section_properties.append(prop.name)
                 for case in section:
                     cases_count += 1
-                    case_id = None
+                    case_ids = []
                     case_name = case.name
                     attachments = []
                     result_fields = []
@@ -115,11 +115,11 @@ class JunitParser(FileParser):
                     sauce_session = None
                     automation_id = f"{case.classname}.{case_name}"
                     if self.case_matcher == MatchersParser.NAME:
-                        case_id, case_name = MatchersParser.parse_name_with_id(case_name)
+                        case_ids, case_name = MatchersParser.parse_name_with_id(case_name)
                     for case_props in case.iterchildren(Properties):
                         for prop in case_props.iterchildren(Property):
                             if prop.name and self.case_matcher == MatchersParser.PROPERTY and prop.name == "test_id":
-                                case_id = int(prop.value.lower().replace("c", ""))
+                                case_ids.append(int(prop.value.lower().replace("c", "")))
                             if prop.name and prop.name.startswith("testrail_result_step"):
                                 status, step = prop.value.split(':', maxsplit=1)
                                 step = TestRailSeparatedStep(step.strip())
@@ -152,27 +152,31 @@ class JunitParser(FileParser):
                     if error:
                         self.env.elog(error)
                         raise Exception(error)
-                    result = TestRailResult(
-                        case_id,
-                        elapsed=case.time,
-                        junit_result_unparsed=case.result,
-                        attachments=attachments,
-                        result_fields=result_fields_dict,
-                        custom_step_results=result_steps
-                    )
-                    for comment in reversed(comments):
-                        result.prepend_comment(comment)
-                    if sauce_session:
-                        result.prepend_comment(f"SauceLabs session: {sauce_session}")
-                    test_cases.append(
-                        TestRailCase(
-                            title=TestRailCaseFieldsOptimizer.extract_last_words(case_name, TestRailCaseFieldsOptimizer.MAX_TESTCASE_TITLE_LENGTH),
-                            case_id=case_id,
-                            result=result,
-                            custom_automation_id=automation_id,
-                            case_fields=case_fields_dict
+                    for case_id in case_ids or [None]:
+                        custom_automation_id = f"{automation_id}.{case_id}" if case_id is not None else automation_id
+                        result = TestRailResult(
+                            case_id,
+                            elapsed=case.time,
+                            junit_result_unparsed=case.result,
+                            attachments=attachments,
+                            result_fields=result_fields_dict,
+                            custom_step_results=result_steps
                         )
-                    )
+                        for comment in reversed(comments):
+                            result.prepend_comment(comment)
+                        if sauce_session:
+                            result.prepend_comment(f"SauceLabs session: {sauce_session}")
+                        test_cases.append(
+                            TestRailCase(
+                                title=TestRailCaseFieldsOptimizer.extract_last_words(
+                                    case_name, TestRailCaseFieldsOptimizer.MAX_TESTCASE_TITLE_LENGTH
+                                ),
+                                case_id=case_id,
+                                result=result,
+                                custom_automation_id=custom_automation_id,
+                                case_fields=case_fields_dict
+                            )
+                        )
                 self.env.log("Processed {0} test cases in section {1}.".format(len(test_cases), section.name))
                 test_sections.append(
                     TestRailSection(

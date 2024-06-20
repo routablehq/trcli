@@ -20,7 +20,7 @@
             "testcases": [
                 {
                     "case_id": 100,
-                    "custom_automation_id": "tests.test_junit_to_dataclass.test_testrail 1",
+                    "custom_automation_id": "tests.test_junit_to_dataclass.test_testrail 1.100",
                     "estimate": null,
                     "milestone_id": null,
                     "refs": null,
@@ -45,7 +45,7 @@
                 },
                 {
                     "case_id": 101,
-                    "custom_automation_id": "tests.test_junit_to_dataclass.test_testrail 2",
+                    "custom_automation_id": "tests.test_junit_to_dataclass.test_testrail 2.101",
                     "estimate": null,
                     "milestone_id": null,
                     "refs": null,
@@ -70,7 +70,7 @@
                 },
                 {
                     "case_id": 102,
-                    "custom_automation_id": "tests.test_junit_to_dataclass.test_testrail 3",
+                    "custom_automation_id": "tests.test_junit_to_dataclass.test_testrail 3.102",
                     "estimate": null,
                     "milestone_id": null,
                     "refs": null,
@@ -97,8 +97,58 @@
                     "case_fields": {}
                 },
                 {
+                    "case_id": 103,
+                    "custom_automation_id": "tests.test_junit_to_dataclass.test_testrail 4.103",
+                    "estimate": null,
+                    "milestone_id": null,
+                    "refs": null,
+                    "result": {
+                        "assignedto_id": null,
+                        "comment": "",
+                        "defects": null,
+                        "elapsed": "159s",
+                        "junit_result_unparsed": [],
+                        "status_id": 1,
+                        "case_id": 103,
+                        "version": null,
+                        "attachments": [],
+                        "result_fields": {},
+                        "custom_step_results": []
+                    },
+                    "section_id": null,
+                    "template_id": null,
+                    "title": "test_testrail 4",
+                    "type_id": null,
+                    "case_fields": {}
+                },
+                {
+                    "case_id": 104,
+                    "custom_automation_id": "tests.test_junit_to_dataclass.test_testrail 4.104",
+                    "estimate": null,
+                    "milestone_id": null,
+                    "refs": null,
+                    "result": {
+                        "assignedto_id": null,
+                        "comment": "",
+                        "defects": null,
+                        "elapsed": "159s",
+                        "junit_result_unparsed": [],
+                        "status_id": 1,
+                        "case_id": 104,
+                        "version": null,
+                        "attachments": [],
+                        "result_fields": {},
+                        "custom_step_results": []
+                    },
+                    "section_id": null,
+                    "template_id": null,
+                    "title": "test_testrail 4",
+                    "type_id": null,
+                    "case_fields": {}
+                },
+                {
                     "case_id": null,
-                    "custom_automation_id": "tests.test_junit_to_dataclass.test_testrail 4",
+                    "custom_automation_id": "tests.test_junit_to_dataclass.test_testrail 5",
                     "estimate": null,
                     "milestone_id": null,
                     "refs": null,
@@ -117,7 +167,7 @@
                     },
                     "section_id": null,
                     "template_id": null,
-                    "title": "test_testrail 4",
+                    "title": "test_testrail 5",
                     "type_id": null,
                     "case_fields": {}
                 }
