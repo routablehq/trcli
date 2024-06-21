@@ -39,6 +39,7 @@ Supported and loaded modules:
     - parse_robot: Robot Framework XML Files
     - parse_openapi: OpenAPI YML Files
     - add_run: Create a new empty test run
+    - close_run: Close a test run
 ```
 
 CLI general reference
@@ -76,6 +77,7 @@ Commands:
   parse_openapi  Parse OpenAPI spec and create cases in TestRail
   parse_robot    Parse Robot Framework report and upload results to TestRail
   add_run        Create a new test run (useful for CI/CD flows prior to parsing results)
+  close_run      Close an open test run with the provided run ID
 ```
 
 Uploading automated test results
@@ -255,7 +257,7 @@ tests are run across parallel, independent test nodes, all nodes should report t
 First, use the `add_run` command to create a new run; then, pass the run title and id to each of the test nodes, which
 will be used to upload all results into the same test run.
 
-### Reference
+#### Reference
 ```shell
 $ trcli add_run --help
 TestRail CLI v1.9.5
@@ -286,6 +288,25 @@ run_id: 1
 ```
 
 This file can be used as the config file (or appended to an existing config file) in a later run.
+
+#### Closing open test runs
+
+When a test run must be closed after test results have been uploaded, use the `close_run` command. For example, tests
+may be uploaded into an open test run using one or more CI/CD processes and nodes. After all processes have completed,
+use the `close_run` command to close the test run.
+
+#### Reference
+```shell
+$ trcli close_run --help
+TestRail CLI v1.9.5
+Copyright 2024 Gurock Software GmbH - www.gurock.com
+Usage: trcli close_run [OPTIONS]
+
+Options:
+  --suite-id   Suite ID of the test run.  [x>=1]
+  --run-id     Run ID for the run to be closed.  [x>=1]
+  --help       Show this message and exit.
+```
 
 Generating test cases from OpenAPI specs
 -----------------

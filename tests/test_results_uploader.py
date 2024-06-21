@@ -209,7 +209,7 @@ class TestResultsUploader:
                 3: mocker.call("Removed 1 unused/empty section(s)."),
                 4: mocker.call("Creating test run. ", new_line=False),
                 5: mocker.call("Test run: https://fake_host.com/index.php?/runs/view/100"),
-                6: mocker.call("Closing test run. ", new_line=False),
+                6: mocker.call(f"Closing test run 100.", new_line=False),
             }
         else:
             calls = {
@@ -217,7 +217,7 @@ class TestResultsUploader:
                 3: mocker.call("Removed 1 unused/empty section(s)."),
                 4: mocker.call("Updating test run. ", new_line=False),
                 5: mocker.call("Test run: https://fake_host.com/index.php?/runs/view/101"),
-                6: mocker.call("Closing test run. ", new_line=False),
+                6: mocker.call(f"Closing test run {run_id}.", new_line=False),
             }
 
         results_uploader.upload_results()

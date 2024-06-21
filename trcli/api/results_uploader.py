@@ -118,11 +118,7 @@ class ResultsUploader(ProjectBasedClient):
             self.environment.log("\n".join(revert_logs))
             exit(1)
         if self.environment.close_run:
-            self.environment.log("Closing test run. ", new_line=False)
-            response, error_message = self.api_request_handler.close_run(run_id)
-        if error_message:
-            self.environment.elog("\n" + error_message)
-            exit(1)
+            self.close_test_run(run_id)
 
         # Terminate upload
         stop = time.time()
