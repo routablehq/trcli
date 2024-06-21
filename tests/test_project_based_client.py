@@ -423,6 +423,19 @@ class TestProjectBasedClient:
                 error_message == ""
         ), f"Expected error message to be None but got {error_message} instead."
 
+    def test_close_run_calls_api_close_run(self, project_based_client_data_provider):
+        """The purpose of this test is to check that calling the close_run method with the run_id causes the method
+        of the same name to be called in the request handler."""
+        (
+            environment,
+            api_request_handler,
+            project_based_client,
+        ) = project_based_client_data_provider
+        api_request_handler.close_run.return_value = (dict(), "")
+        project_based_client.resolve_project()
+        project_based_client.close_test_run(1)
+        api_request_handler.close_run.assert_called_once()
+
     def test_get_project_id(self, project_based_client_data_provider):
         """The purpose of this test is to check that the _get_project_id() will fall back to the environment.project_id
         when environment.project does not contain the project_id."""

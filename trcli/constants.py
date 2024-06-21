@@ -13,6 +13,10 @@ ADD_RUN_FAULT_MAPPING = dict(
     missing_title="Please give your Test Run a title using the --title argument.",
 )
 
+CLOSE_RUN_FAULT_MAPPING = dict(
+    missing_run_id="Please give your Test Run ID using the --run-id argument.",
+)
+
 FAULT_MAPPING = dict(
     invalid_file="Provided file is not a valid file.",
     missing_host="Please provide a TestRail server address with the -h argument.",
@@ -61,6 +65,7 @@ FAULT_MAPPING = dict(
 
 COMMAND_FAULT_MAPPING = dict(
     add_run=dict(**FAULT_MAPPING, **ADD_RUN_FAULT_MAPPING),
+    close_run=dict(**FAULT_MAPPING, **CLOSE_RUN_FAULT_MAPPING),
     parse_junit=dict(**FAULT_MAPPING, **PARSE_COMMON_FAULT_MAPPING, **PARSE_JUNIT_OR_ROBOT_FAULT_MAPPING),
     parse_openapi=dict(**FAULT_MAPPING, **PARSE_COMMON_FAULT_MAPPING),
     parse_robot=dict(**FAULT_MAPPING, **PARSE_COMMON_FAULT_MAPPING, **PARSE_JUNIT_OR_ROBOT_FAULT_MAPPING),
@@ -84,7 +89,8 @@ TOOL_USAGE = f"""Supported and loaded modules:
     - parse_junit: JUnit XML Files (& Similar)
     - parse_robot: Robot Framework XML Files
     - parse_openapi: OpenAPI YML Files
-    - add_run: Create a new test run"""
+    - add_run: Create a new test run
+    - close_run: Close a test run"""
 
 MISSING_COMMAND_SLOGAN = """Usage: trcli [OPTIONS] COMMAND [ARGS]...\nTry 'trcli --help' for help.
 \nError: Missing command."""

@@ -191,6 +191,9 @@ class ProjectBasedClient:
             exit(1)
         return suite_id, suite_added
 
+    def get_test_run_url(self, run_id: int) -> str:
+        return f"{self.environment.host.rstrip('/')}/index.php?/runs/view/{run_id}"
+
     def create_or_update_test_run(self) -> Tuple[int, str]:
         """
         If a run_id is provided, update the test run; otherwise, add a new test run.
@@ -211,8 +214,20 @@ class ProjectBasedClient:
         if error_message:
             self.environment.elog("\n" + error_message)
         else:
-            self.environment.log(f"Test run: {self.environment.host.rstrip('/')}/index.php?/runs/view/{run_id}")
+            self.environment.log(f"Test run: {self.get_test_run_url(run_id)}")
         return run_id, error_message
+
+    def close_test_run(self, run_id):
+        """
+        Close a test run.
+        """
+        self.environment.log(f"Closing test run {run_id}.", new_line=False)
+        _, error_message = self.api_request_handler.close_run(run_id)
+
+        if error_message:
+            self.environment.elog("\n" + error_message)
+            exit(1)
+        self.environment.log(" Done.")
 
     def prompt_user_and_add_items(
         self,
