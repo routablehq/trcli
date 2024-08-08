@@ -12,9 +12,9 @@ class FileParser:
     """
 
     def __init__(self, environment: Environment):
+        self.env = environment
         self.filepath = self.check_file(environment.file)
         self.filename = self.filepath.name
-        self.env = environment
 
     @staticmethod
     def check_file(filepath: Union[str, Path]) -> Path:

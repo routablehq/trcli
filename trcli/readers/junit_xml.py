@@ -56,8 +56,7 @@ class JunitParser(FileParser):
         else:
             raise JUnitXmlError("Invalid format.")
 
-    @staticmethod
-    def check_file(filepath: Union[str, Path]) -> Path:
+    def check_file(self, filepath: Union[str, Path]) -> Path:
         if "," in str(filepath):
             files = [str(Path(part)) for part in filepath.split(",")]
         else:
@@ -67,7 +66,9 @@ class JunitParser(FileParser):
         if not files:
             raise FileNotFoundError("File(s) not found.")
         sub_suites = []
+        self.env.log(f"Merging {len(files)} files ..")
         for file in files:
+            self.env.log(f"  {file}...")
             suite = JUnitXml.fromfile(file)
             if isinstance(suite, JUnitXml):
                 # add suites from root
@@ -84,7 +85,7 @@ class JunitParser(FileParser):
         return merged_report_path
 
     def parse_file(self) -> List[TestRailSuite]:
-        self.env.log(f"Parsing JUnit report.")
+        self.env.log(f"Parsing JUnit report {self.filepath}")
         suite = JUnitXml.fromfile(
             self.filepath, parse_func=self._add_root_element_to_tree
         )
