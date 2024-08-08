@@ -1,0 +1,154 @@
+{
+    "name": "Merged-JUnit-report.xml 20-05-20 01:00:00",
+    "suite_id": null,
+    "description": null,
+    "source": "Merged-JUnit-report.xml",
+    "testsections": [
+        {
+            "description": null,
+            "name": "One passing scenario, one failing scenario",
+            "parent_id": null,
+            "properties": [],
+            "section_id": null,
+            "suite_id": null,
+            "testcases": [
+                {
+                    "case_id": null,
+                    "custom_automation_id": "One passing scenario, one failing scenario.bjbszpjfyfygrqgxsjyvtguoblrfeleouzktjnqgpcwtuvbedykryuvqeyhgopxphlgguultqosfsrfslpfazzvoqkkbixmoataqmiagpyhqxzjwcmpaepmyvagvfcekhvowjuulxkgmgjxsqaqlipszvodwwlohlwzyjsbwukbwjgycqfgygstclocmfzglskntohpnzkylrjswpypwrefwmdvmhekgnklrherxwqhtkhjkjdbqfymemjcjpppu",
+                    "estimate": null,
+                    "milestone_id": null,
+                    "refs": null,
+                    "result": {
+                        "assignedto_id": null,
+                        "comment": "",
+                        "defects": null,
+                        "elapsed": "1s",
+                        "junit_result_unparsed": [],
+                        "status_id": 1,
+                        "case_id": null,
+                        "version": null,
+                        "attachments": [],
+                        "result_fields": {},
+                        "custom_step_results": []
+                    },
+                    "section_id": null,
+                    "template_id": null,
+                    "title": "jfyfygrqgxsjyvtguoblrfeleouzktjnqgpcwtuvbedykryuvqeyhgopxphlgguultqosfsrfslpfazzvoqkkbixmoataqmiagpyhqxzjwcmpaepmyvagvfcekhvowjuulxkgmgjxsqaqlipszvodwwlohlwzyjsbwukbwjgycqfgygstclocmfzglskntohpnzkylrjswpypwrefwmdvmhekgnklrherxwqhtkhjkjdbqfymemjcjpppu",
+                    "case_fields": {},
+                    "type_id": null
+                },
+                {
+                    "case_id": null,
+                    "custom_automation_id": "One passing scenario, one failing scenario.Failing",
+                    "estimate": null,
+                    "milestone_id": null,
+                    "refs": null,
+                    "result": {
+                        "assignedto_id": null,
+                        "comment": "Type: failed\nMessage: failed Failing\nText: FAILURE - No connection",
+                        "defects": null,
+                        "elapsed": "10s",
+                        "junit_result_unparsed": [],
+                        "status_id": 5,
+                        "case_id": null,
+                        "version": null,
+                        "attachments": [],
+                        "result_fields": {},
+                        "custom_step_results": []
+                    },
+                    "section_id": null,
+                    "template_id": null,
+                    "title": "Failing",
+                    "case_fields": {},
+                    "type_id": null
+                }
+            ]
+        },
+        {
+            "description": null,
+            "name": "Skipped test",
+            "parent_id": null,
+            "properties": [
+                {
+                    "description": "setting1: True",
+                    "name": "setting1",
+                    "value": "True"
+                }
+            ],
+            "section_id": null,
+            "suite_id": null,
+            "testcases": [
+                {
+                    "case_id": null,
+                    "custom_automation_id": "tests.test_junit_to_dataclass.test_testrail_test_suite",
+                    "estimate": null,
+                    "milestone_id": null,
+                    "refs": null,
+                    "result": {
+                        "assignedto_id": null,
+                        "comment": "Finding 1\n\nFinding 2\n\ntesting:&&qS55!T@\n\nType: pytest.skip\nMessage: Please skip\nText: skipped by user",
+                        "defects": null,
+                        "elapsed": "159s",
+                        "junit_result_unparsed": [],
+                        "status_id": 4,
+                        "case_id": null,
+                        "version": null,
+                        "attachments": [
+                            "/first.file",
+                            "second.file"
+                        ],
+                        "result_fields": {
+                            "version": "1.1",
+                            "custom_field": "custom_val"
+                        },
+                        "custom_step_results": [
+                            {
+                                "content": "Go to homepage",
+                                "status_id": 1
+                            },
+                            {
+                                "content": "Verify content",
+                                "status_id": 5
+                            }
+                        ]
+                    },
+                    "section_id": null,
+                    "template_id": null,
+                    "title": "test_testrail_test_suite",
+                    "case_fields": {
+                        "custom_case_field": "custom_case_val",
+                        "custom_steps": "1. First step\n2. Second step\n3. Third step",
+                        "test_empty_value": "another_case_val"
+                    },
+                    "type_id": null
+                },
+                {
+                    "case_id": null,
+                    "custom_automation_id": "The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs vex! Fox nymph.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.",
+                    "estimate": null,
+                    "milestone_id": null,
+                    "refs": null,
+                    "case_fields": {
+                    },
+                    "result": {
+                        "assignedto_id": null,
+                        "defects": null,
+                        "elapsed": "160s",
+                        "junit_result_unparsed": [],
+                        "status_id": 1,
+                        "case_id": null,
+                        "version": null,
+                        "custom_step_results": [],
+                        "result_fields": {},
+                        "attachments": [],
+                        "comment": ""
+                    },
+                    "section_id": null,
+                    "template_id": null,
+                    "title": "elit Aenean commodo ligula eget dolor Aenean massa Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem Nulla consequat massa quis enim Donec",
+                    "type_id": null
+                }
+            ]
+        }
+    ]
+}

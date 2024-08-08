@@ -58,16 +58,24 @@ class JunitParser(FileParser):
 
     @staticmethod
     def check_file(filepath: Union[str, Path]) -> Path:
-        filepath = Path(filepath)
-        files = glob.glob(str(filepath))
+        if "," in str(filepath):
+            files = [str(Path(part)) for part in filepath.split(",")]
+        else:
+            files = glob.glob(str(filepath), recursive=("**" in str(filepath)))
+            if len(files) == 1:
+                return Path().cwd().joinpath(files[0])
         if not files:
-            raise FileNotFoundError("File not found.")
-        elif len(files) == 1:
-            return filepath
+            raise FileNotFoundError("File(s) not found.")
         sub_suites = []
         for file in files:
             suite = JUnitXml.fromfile(file)
-            sub_suites.append(suite)
+            if isinstance(suite, JUnitXml):
+                # add suites from root
+                for child_suite in suite:
+                    sub_suites.append(child_suite)
+            else:
+                # no root
+                sub_suites.append(suite)
         suite = sub_suites.pop(0)
         for sub_suite in sub_suites:
             suite += sub_suite

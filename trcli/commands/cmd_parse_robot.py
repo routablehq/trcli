@@ -12,6 +12,7 @@ from trcli.readers.robot_xml import RobotParser
 
 
 @click.command(context_settings=CONTEXT_SETTINGS)
+@click.option("-f", "--file", type=click.Path(), metavar="", help="Filename and path.")
 @results_parser_options
 @click.pass_context
 @pass_environment

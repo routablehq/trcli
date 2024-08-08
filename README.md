@@ -73,7 +73,7 @@ Options:
   --help             Show this message and exit.
 
 Commands:
-  parse_junit    Parse JUnit report and upload results to TestRail
+  parse_junit    Parse JUnit reports and upload results to TestRail
   parse_openapi  Parse OpenAPI spec and create cases in TestRail
   parse_robot    Parse Robot Framework report and upload results to TestRail
   add_run        Create a new test run (useful for CI/CD flows prior to parsing results)
@@ -100,7 +100,7 @@ Usage: trcli parse_junit [OPTIONS]
   Parse report files and upload results to TestRail
 
 Options:
-  -f, --file          Filename and path.
+  -f, --file          Filenames with paths. Multiple files can be separated by comma. Globbing with * is allowed.
   --close-run         Close the newly created run
   --title             Title of Test Run to be created in TestRail.
   --case-matcher      Mechanism to match cases between the report and

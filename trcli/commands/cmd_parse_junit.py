@@ -13,6 +13,11 @@ from trcli.readers.junit_xml import JunitParser
 
 
 @click.command(context_settings=CONTEXT_SETTINGS)
+@click.option(
+    "-f", "--file",
+    metavar="",
+    help="Filenames with paths. Multiple files can be separated by comma. Globbing with * is allowed.",
+)
 @results_parser_options
 @click.option(
     "--special-parser",
