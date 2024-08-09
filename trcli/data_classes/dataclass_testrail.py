@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 from time import gmtime, strftime
+from typing import Dict
+
 from beartype.typing import List, Optional
 
 from serde import field, serialize, deserialize, to_dict
@@ -38,6 +40,7 @@ class TestRailResult:
     result_fields: Optional[dict] = field(default_factory=dict, skip=True)
     junit_result_unparsed: List = field(default=None, metadata={"serde_skip": True})
     custom_step_results: List[TestRailSeparatedStep] = field(default_factory=list, skip_if_default=True)
+    custom_result_statuses: Optional[Dict[str, int]] = field(default=None, skip=True)
 
     def __post_init__(self):
         if self.junit_result_unparsed is not None:
@@ -50,8 +53,7 @@ class TestRailResult:
         if self.elapsed is not None:
             self.elapsed = self.proper_format_for_elapsed(self.elapsed)
 
-    @staticmethod
-    def calculate_status_id_from_junit_element(junit_result: List) -> int:
+    def calculate_status_id_from_junit_element(self, junit_result: List) -> int:
         """
          Calculate id for first result. In junit no result mean pass
         1 - Passed
@@ -59,13 +61,22 @@ class TestRailResult:
         4 - Retest
         5 - Failed
         """
-        if len(junit_result) == 0:
-            return 1
-        test_result_tag = junit_result[0]._tag.lower()
-        if test_result_tag == "skipped":
-            return 4
-        elif test_result_tag == "error" or "failure":
-            return 5
+        tag_status_id = {
+            "passed": 1,
+            "untested": 3,
+            "retest": 4,
+            "skipped": 4,
+            "failed": 5,
+            "error": 5,
+            "failure": 5,
+        }
+        if self.custom_result_statuses:
+            tag_status_id.update(self.custom_result_statuses)
+
+        status_tag = "passed"
+        if len(junit_result) != 0:
+            status_tag = junit_result[0]._tag.lower()
+        return tag_status_id[status_tag] if status_tag in tag_status_id else 3
 
     @staticmethod
     def get_comment_from_junit_element(junit_result: List) -> str:

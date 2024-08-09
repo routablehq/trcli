@@ -100,34 +100,38 @@ Usage: trcli parse_junit [OPTIONS]
   Parse report files and upload results to TestRail
 
 Options:
-  -f, --file          Filenames with paths. Multiple files can be separated by comma. Globbing with * is allowed.
-  --close-run         Close the newly created run
-  --title             Title of Test Run to be created in TestRail.
-  --case-matcher      Mechanism to match cases between the report and
-                      TestRail.
-  --suite-id          Suite ID to submit results to.  [x>=1]
-  --suite-name        Suite name to submit results to.
-  --run-id            Run ID for the results they are reporting (otherwise the
-                      tool will attempt to create a new run).  [x>=1]
-  --plan-id           Plan ID with which the Test Run will be associated.
-                      [x>=1]
-  --config-ids        Comma-separated configuration IDs to use along with Test
-                      Plans (i.e.: 34,52).
-  --milestone-id      Milestone ID to which the Test Run should be associated
-                      to.  [x>=1]
-  --section-id        Section ID to create new sections with test cases under
-                      (optional).  [x>=1]
-  --run-description   Summary text to be added to the test run.
-  --case-fields       List of case fields and values for new test cases
-                      creation. Usage: --case-fields type_id:1 --case-fields
-                      priority_id:3
-  --result-fields     List of result fields and values for test results
-                      creation. Usage: --result-fields custom_field_a:value1
-                      --result-fields custom_field_b:3
-  --allow-ms          Allows using milliseconds for elapsed times.
-  --special-parser    Optional special parser option for specialized JUnit
-                      reports.
-  --help              Show this message and exit.
+  -f, --file                Filenames with paths. Multiple files can be separated by comma. Globbing with * is allowed.
+  --close-run               Close the newly created run
+  --title                   Title of Test Run to be created in TestRail.
+  --case-matcher            Mechanism to match cases between the report and
+                            TestRail.
+  --suite-id                Suite ID to submit results to.  [x>=1]
+  --suite-name              Suite name to submit results to.
+  --run-id                  Run ID for the results they are reporting (otherwise the
+                            tool will attempt to create a new run).  [x>=1]
+  --plan-id                 Plan ID with which the Test Run will be associated.
+                            [x>=1]
+  --config-ids              Comma-separated configuration IDs to use along with Test
+                            Plans (i.e.: 34,52).
+  --milestone-id            Milestone ID to which the Test Run should be associated
+                            to.  [x>=1]
+  --section-id              Section ID to create new sections with test cases under
+                            (optional).  [x>=1]
+  --run-description         Summary text to be added to the test run.
+  --case-fields             List of case fields and values for new test cases
+                            creation. Usage: --case-fields type_id:1 --case-fields
+                            priority_id:3
+  --result-fields           List of result fields and values for test results
+                            creation. Usage: --result-fields custom_field_a:value1
+                            --result-fields custom_field_b:3
+  --allow-ms                Allows using milliseconds for elapsed times.
+  --special-parser          Optional special parser option for specialized JUnit
+                            reports.
+  --result-status-mapping   Set status mapping like '<tag_name>:<status_id>'.
+                            Statuses in your xml must be parsable by the junit
+                            parser. Usage: --result-status-mapping skipped:6
+                            --result-status-mapping custom1:7
+  --help                    Show this message and exit.
 ```
 
 ### JUnit XML report example

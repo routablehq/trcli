@@ -71,6 +71,22 @@ class TestJunitParser:
             f"Result of parsing Junit XML is different than expected \n{DeepDiff(parsing_result_json, expected_json)}"
 
     @pytest.mark.parse_junit
+    def test_junit_xml_parser_custom_result_status(self, freezer):
+        freezer.move_to("2020-05-20 01:00:00")
+        env = Environment()
+        env.case_matcher = MatchersParser.AUTO
+        env.custom_result_statuses = {"skipped": 6}
+        env.file = Path(__file__).parent / "test_data/XML/custom_status.xml"
+        file_reader = JunitParser(env)
+        read_junit = self.__clear_unparsable_junit_elements(file_reader.parse_file()[0])
+        parsing_result_json = asdict(read_junit)
+        print(parsing_result_json)
+        file_json = open(Path(__file__).parent / "test_data/json/custom_status.json")
+        expected_json = json.load(file_json)
+        assert DeepDiff(parsing_result_json, expected_json) == {}, \
+            f"Result of parsing Junit XML is different than expected \n{DeepDiff(parsing_result_json, expected_json)}"
+
+    @pytest.mark.parse_junit
     def test_junit_xml_elapsed_milliseconds(self, freezer):
         freezer.move_to("2020-05-20 01:00:00")
         env = Environment()

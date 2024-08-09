@@ -1,4 +1,6 @@
 import json
+from typing import List
+
 import pytest
 from junitparser import Element
 from tests.test_data.dataclass_creation import *
@@ -34,7 +36,7 @@ class TestDataClassCreation:
     )
     @pytest.mark.dataclass
     def test_create_test_result_from_junit_element(
-        self, junit_test_result: Element, expected_result: dict
+        self, junit_test_result: List[Element], expected_result: dict
     ):
         result_dataclass = TestRailResult(1, junit_result_unparsed=junit_test_result)
         result_json = json.loads(to_json(result_dataclass))
@@ -44,6 +46,16 @@ class TestDataClassCreation:
         assert (
             result_json["comment"] == expected_result["comment"]
         ), "Joined comment doesn't mach expected comment"
+
+    @pytest.mark.dataclass
+    def test_create_test_result_with_custom_result_status(self):
+        result_dataclass = TestRailResult(
+            1, junit_result_unparsed=[SKIPPED_RESULT_INPUT], custom_result_statuses={"skipped": 6},
+        )
+        result_json = json.loads(to_json(result_dataclass))
+        assert (
+                result_json["status_id"] == 6
+        ), "calculated status id doesn't mach expected custom id"
 
     @pytest.mark.dataclass
     def test_create_property(self):

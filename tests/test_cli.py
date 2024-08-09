@@ -1,17 +1,11 @@
-import unittest
 from pathlib import Path
+from shutil import copyfile
+from unittest import mock
 
 import pytest
-
 from click.testing import CliRunner
 
-import trcli.cli
-from shutil import copyfile
-from trcli.cli import cli
-from trcli.backports import removeprefix
-from trcli.constants import FAULT_MAPPING
 from tests.helpers.cli_helpers import CLIParametersHelper
-
 from tests.test_data.cli_test_data import (
     CHECK_ERROR_MESSAGE_FOR_REQUIRED_PARAMETERS_TEST_DATA,
     CHECK_ERROR_MESSAGE_FOR_REQUIRED_PARAMETERS_TEST_IDS,
@@ -20,6 +14,8 @@ from tests.test_data.cli_test_data import (
     trcli_description,
     trcli_help_description,
 )
+from trcli.backports import removeprefix
+from trcli.cli import cli
 
 
 @pytest.fixture(scope="class")
@@ -263,3 +259,29 @@ class TestCli:
         expected = cli_agrs_helper.get_required_parameters_without_command_no_dashes()
         for arg_name, arg_value in expected:
             setattr_mock.assert_any_call(mocker.ANY, arg_name, arg_value)
+
+    @pytest.mark.cli
+    def test_parse_junit_command_with_result_status_mapping(self, mocker, cli_resources):
+        """The purpose of this test is to check that parsing a junit xml file with custom result status mappings
+        causes the result mapping ids to be passed to the result uploader in the environment object."""
+        with mock.patch("trcli.commands.cmd_parse_junit.ResultsUploader") as mock_results_uploader:
+            cli_args_helper, cli_runner = cli_resources
+            args = cli_args_helper.get_all_required_parameters_without_specified(["host", "file"])
+            args = [
+                "--host", "http://fake.com",
+                *args,
+                "--file", (Path(__file__).parent / "test_data/XML/custom_status.xml"),
+                "--result-status-mapping", "skipped:6",
+                "--result-status-mapping", "custom1:7",
+            ]
+            mocker.patch("sys.argv", ["trcli", *args])
+            result = cli_runner.invoke(cli, args)
+            assert (
+                    result.exit_code == 0
+            ), f"Exit code 0 expected. Got: {result.exit_code} instead."
+            assert (
+                mock_results_uploader.call_args_list[0].kwargs["environment"].custom_result_statuses == {
+                    "skipped": 6,
+                    "custom1": 7,
+                }
+            )

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite failures="0" errors="0" skipped="1" tests="2" time="0.05" name="One passing scenario, one failing scenario">
+  <testcase classname="One passing scenario, one custom scenarios" name="Passing" time="0.05" />
+  <testcase classname="One passing scenario, one custom scenarios" name="Skipping" time="10">
+    <skipped type="pytest.skip" message="Please skip">Skipped - No connection</skipped>
+  </testcase>
+</testsuite>

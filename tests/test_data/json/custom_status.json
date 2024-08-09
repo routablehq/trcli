@@ -1,18 +1,19 @@
 {
-    "name": "Firefox",
+    "name": "custom_status.xml 20-05-20 01:00:00",
     "suite_id": null,
     "description": null,
+    "source": "custom_status.xml",
     "testsections": [
         {
-            "name": "test_suite_1.cy.js",
+            "name": "One passing scenario, one failing scenario",
             "suite_id": null,
             "parent_id": null,
             "description": null,
             "section_id": null,
             "testcases": [
                 {
+                    "title": "Passing",
                     "section_id": null,
-                    "title": "Component 1 Verify page structure",
                     "case_id": null,
                     "estimate": null,
                     "template_id": null,
@@ -23,43 +24,24 @@
                     "result": {
                         "case_id": null,
                         "status_id": 1,
-                        "comment": "SauceLabs session: https://app.saucelabs.com/tests/7d7544f09a47428fb97ee53d1a5b1419\n\n",
+                        "comment": "",
                         "version": null,
                         "elapsed": "1s",
                         "defects": null,
                         "assignedto_id": null,
                         "attachments": [],
-                        "junit_result_unparsed": [],
                         "result_fields": {},
+                        "junit_result_unparsed": [],
                         "custom_step_results": [],
-                        "custom_result_statuses": null
+                        "custom_result_statuses": {
+                            "skipped": 6
+                        }
                     },
-                    "custom_automation_id": "Verify page structure.Component 1 Verify page structure"
-                }
-            ],
-            "properties": [
-                {
-                    "name": "browser",
-                    "value": "firefox 108",
-                    "description": "browser: firefox 108"
+                    "custom_automation_id": "One passing scenario, one custom scenarios.Passing"
                 },
                 {
-                    "name": "platform",
-                    "value": "Windows 11",
-                    "description": "platform: Windows 11"
-                }
-            ]
-        },
-        {
-            "name": "test_suite_2.cy.js",
-            "suite_id": null,
-            "parent_id": null,
-            "description": null,
-            "section_id": null,
-            "testcases": [
-                {
+                    "title": "Skipping",
                     "section_id": null,
-                    "title": "Component 2 Verify page structure",
                     "case_id": null,
                     "estimate": null,
                     "template_id": null,
@@ -69,23 +51,24 @@
                     "case_fields": {},
                     "result": {
                         "case_id": null,
-                        "status_id": 1,
-                        "comment": "SauceLabs session: https://app.saucelabs.com/tests/cbb864e049c645e1a96d56e953fe33f0\n\n",
+                        "status_id": 6,
+                        "comment": "Type: pytest.skip\nMessage: Please skip\nText: Skipped - No connection",
                         "version": null,
-                        "elapsed": "1s",
+                        "elapsed": "10s",
                         "defects": null,
                         "assignedto_id": null,
                         "attachments": [],
-                        "junit_result_unparsed": [],
                         "result_fields": {},
+                        "junit_result_unparsed": [],
                         "custom_step_results": [],
-                        "custom_result_statuses": null
+                        "custom_result_statuses": {
+                            "skipped": 6
+                        }
                     },
-                    "custom_automation_id": "Verify page structure.Component 2 Verify page structure"
+                    "custom_automation_id": "One passing scenario, one custom scenarios.Skipping"
                 }
             ],
             "properties": []
         }
-    ],
-    "source": "sauce.xml"
+    ]
 }

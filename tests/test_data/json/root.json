@@ -50,7 +50,8 @@
                                 "content": "Verify content",
                                 "status_id": 5
                             }
-                        ]
+                        ],
+                        "custom_result_statuses": null
                     },
                     "section_id": null,
                     "template_id": null,
@@ -81,7 +82,8 @@
                         "custom_step_results": [],
                         "result_fields": {},
                         "attachments": [],
-                        "comment": ""
+                        "comment": "",
+                        "custom_result_statuses": null
                     },
                     "section_id": null,
                     "template_id": null,

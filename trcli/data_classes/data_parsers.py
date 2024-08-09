@@ -1,4 +1,6 @@
 import re
+from typing import Callable, Any
+
 from beartype.typing import Union, List, Dict
 
 
@@ -61,7 +63,7 @@ class MatchersParser:
 class FieldsParser:
 
     @staticmethod
-    def resolve_fields(fields: Union[List[str], Dict]) -> (Dict, str):
+    def resolve_fields(fields: Union[List[str], Dict], type_method: Callable[[str], Any] = str) -> (Dict, str):
         error = None
         fields_dictionary = {}
         try:
@@ -70,10 +72,10 @@ class FieldsParser:
                     field, value = field.split(":", maxsplit=1)
                     if value.startswith("["):
                         try:
-                            value = eval(value)
+                            value = type_method(eval(value))
                         except Exception:
                             pass
-                    fields_dictionary[field] = value
+                    fields_dictionary[field] = type_method(value)
             elif isinstance(fields, dict):
                 fields_dictionary = fields
             else:
@@ -81,6 +83,7 @@ class FieldsParser:
             return fields_dictionary, error
         except Exception as ex:
             return fields_dictionary, f"Error parsing fields: {ex}"
+
 
 class TestRailCaseFieldsOptimizer:
 

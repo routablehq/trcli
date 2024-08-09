@@ -26,6 +26,13 @@ from trcli.readers.junit_xml import JunitParser
     type=click.Choice(["junit", "saucectl"], case_sensitive=False),
     help="Optional special parser option for specialized JUnit reports."
 )
+@click.option(
+    "--result-status-mapping",
+    metavar="",
+    multiple=True,
+    help="Set status mapping like '<tag_name>:<status_id>'. Statuses in your xml must be parsable by the junit parser. "
+         "Usage: --result-status-mapping skipped:6 --result-status-mapping custom1:7"
+)
 @click.pass_context
 @pass_environment
 def cli(environment: Environment, context: click.Context, *args, **kwargs):

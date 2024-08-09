@@ -169,7 +169,8 @@ class JunitParser(FileParser):
                             junit_result_unparsed=case.result,
                             attachments=attachments,
                             result_fields=result_fields_dict,
-                            custom_step_results=result_steps
+                            custom_step_results=result_steps,
+                            custom_result_statuses=self.env.custom_result_statuses
                         )
                         for comment in reversed(comments):
                             result.prepend_comment(comment)

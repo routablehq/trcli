@@ -66,6 +66,17 @@ class Environment:
         self.run_case_ids = None
         self.run_include_all = None
         self.run_refs = None
+        self.custom_result_statuses = None
+
+    def __setattr__(self, __name, __value):
+        if "result_status_mapping" == __name:
+            fields_dict, error = FieldsParser.resolve_fields(__value, type_method=int)
+            if error:
+                self.elog(error)
+                exit(1)
+            self.custom_result_statuses = fields_dict
+        else:
+            super().__setattr__(__name, __value)
 
     @property
     def case_fields(self):
