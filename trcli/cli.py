@@ -66,6 +66,9 @@ class Environment:
         self.run_case_ids = None
         self.run_include_all = None
         self.run_refs = None
+        self.proxy = None  # Add proxy related attributes
+        self.noproxy = None
+        self.proxy_user = None
         self.custom_result_statuses = None
 
     def __setattr__(self, __name, __value):
@@ -145,11 +148,14 @@ class Environment:
             param_sources_types = [ParameterSource.DEFAULT, ParameterSource.ENVIRONMENT]
         for param, value in context.params.items():
             # Don't set config again
+            # Skip setting config again
             if param == "config":
                 continue
             param_config_value = self.params_from_config.get(param, None)
             param_source = context.get_parameter_source(param)
-            if param_source in param_sources_types and (param_config_value is not None):
+
+            # Set parameter from config or CLI/environment depending on the source
+            if param_source in param_sources_types and param_config_value is not None:
                 setattr(self, param, param_config_value)
             else:
                 setattr(self, param, value)
@@ -325,6 +331,22 @@ class TRCLI(click.MultiCommand):
     help="Silence stdout",
     default=False,
 )
+@click.option(
+    "--proxy",
+    metavar="",
+    help="Proxy address and port (e.g., http://proxy.example.com:8080)."
+)
+@click.option(
+    "--proxy-user",
+    metavar="",
+    help="Proxy username and password in the format 'username:password'."
+)
+@click.option(
+    "--noproxy",
+    metavar="",
+    help="Comma-separated list of hostnames to bypass the proxy (e.g., localhost,127.0.0.1)."
+)
+
 def cli(environment: Environment, context: click.core.Context, *args, **kwargs):
     """TestRail CLI"""
     if not sys.argv[1:]:

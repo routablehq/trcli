@@ -30,8 +30,8 @@ class TestJunitParser:
                 Path(__file__).parent / "test_data/json/root.json",
             ),
             (
-                Path(__file__).parent / "test_data/XML/ro*t.xml",
-                Path(__file__).parent / "test_data/json/root.json",
+                    Path(__file__).parent / "test_data/XML/ro*t.xml",
+                    Path(__file__).parent / "test_data/json/root.json",
             ),
             (
                 Path(__file__).parent / "test_data/XML/required_only.xml",
